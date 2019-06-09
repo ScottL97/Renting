@@ -1,0 +1,11 @@
+<div *ngIf="this.billService.ifAll">
+  <div class="list-group" *ngFor="let bill of billItems">
+    <a class="list-group-item list-group-item-action list-group-item-dark" [routerLink]="['../bill-details', bill.id]">
+      {{bill.name}}
+      <div class="text-right">￥{{bill.price | number: '.2-2'}}</div>
+    </a>
+  </div>
+</div>
+<div *ngIf="!this.billService.ifAll">
+  未支付账单
+</div>

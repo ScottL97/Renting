@@ -1,0 +1,8 @@
+<div class="text-center m-5 p-5">
+  <button class="btn btn-lg btn-dark mx-2" type="button" [routerLink]="['../bill-create']">
+    创建账单
+  </button>
+  <button class="btn btn-lg btn-dark mx-2" type="button" [routerLink]="['../bill-list']" (click)="this.billService.changeDisplayMode(true)">
+    账单记录
+  </button>
+</div>
