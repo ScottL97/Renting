@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service'; 
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,9 @@ export class BillService {
   unpaidBills = []; //未支付账单
   paidBills = []; //支付账单
   ifAll = false; //bill-list显示所有账单还是未支付账单
-  unpaidValues = []; //{id: billId, value: price / pay_users.split(';').length}
-  unpaidSum = 0.0;
+  unpaidValues = []; //{id: billId, value: price / pay_users.split(';').length}, owner: billOwner
+  unpaidSum = 0.0; //未支付总额
+  debts = []; //需向xx支付xx元
 
   getItems() {
     var that = this;
@@ -34,7 +36,8 @@ export class BillService {
     for(let i in that.unpaidBills) {
       var obj = {
         id: that.unpaidBills[i]['id'],
-        value: that.unpaidBills[i]['price'] / that.unpaidBills[i]['pay_users'].split(';').length
+        value: that.unpaidBills[i]['price'] / that.unpaidBills[i]['pay_users'].split(';').length,
+        owner: that.unpaidBills[i]['bill_owner']
       }
       that.unpaidSum += obj.value;
       that.unpaidValues.push(obj);
@@ -77,6 +80,26 @@ export class BillService {
     }
     return res;
   }
+  //获取欠款返回[{ userId: debt }, { userId: debt }]
+  updateDebts() {
+    var that = this;
+    var owners = [];
+    for (var i in that.unpaidValues) {
+      //如果bill_owner不存在于owners数组中，则在
+      if (owners.indexOf(that.unpaidValues[i]['owner']) == -1) {
+          owners.push(that.unpaidValues[i]['owner']);
+          var obj = {
+              owner: that.unpaidValues[i]['owner'],
+              debt: that.unpaidValues[i]['value']
+          };
+          that.debts[that.unpaidValues[i]['owner']] = obj;
+      }
+      else {
+          that.debts[that.unpaidValues[i]['owner']]['debt'] += that.unpaidValues[i]['value'];
+          console.log(that.debts[that.unpaidValues[i]['owner']]['debt']);
+      }
+    }
+  }
 
   constructor(
     private httpClient: HttpClient,
@@ -105,6 +128,7 @@ export class BillService {
         }
       }
       this.updateUnpaidValue();
+      this.updateDebts();
     });
   }
 

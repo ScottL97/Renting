@@ -24,8 +24,11 @@ export class BillDetailsComponent implements OnInit {
       this.billId = params.billId;
     });
     this.item = this.billService.getItem(this.billId);
-    this.loginService.updateUsersByIds(this.item['pay_users']);
-    this.userNames = this.loginService.userNames;
+    this.userNames = "";
+    var pay_ids = this.item.pay_users.split(';');
+    for(let i in pay_ids) {
+      this.userNames += this.loginService.userDict[pay_ids[i]] + " ";
+    }
   }
 
 }

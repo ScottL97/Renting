@@ -1,7 +1,7 @@
 <div *ngIf="this.loginService.ifLogin">
-  <p>
-    todo works!
-  </p>
+  <div *ngFor="let debtItem of this.debts" class="text-center">
+    需向{{ this.loginService.userDict[debtItem.owner] }}支付￥{{ debtItem.debt | number: '.2-2' }}元
+  </div>
 </div>
 
 <div *ngIf="!this.loginService.ifLogin">
