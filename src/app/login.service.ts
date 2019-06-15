@@ -9,6 +9,7 @@ export class LoginService {
   ifLogin = false;
   userId = "000";
   userName = "guest";
+  userNames = ""; //当前点击账单用户名
   constructor( ) { }
   userLogin(user, pwd) {
     var that = this;
@@ -21,6 +22,16 @@ export class LoginService {
       } else {
         that.ifLogin = false;
         console.log("登录失败");
+      }
+    });
+  }
+  //"001;002;003" -> "刘鑫昊 郑成杰 翟琨"
+  updateUsersByIds(ids) {
+    var that = this;
+    $.post("./PHP/getUsersByIds.php", { ids: ids }, function(res) {
+      if(res != null) {
+        console.log("账单用户：" + res);
+        that.userNames = res;
       }
     });
   }

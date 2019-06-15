@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BillService } from '../bill.service';
+import { LoginService } from '../login.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,8 +12,10 @@ export class BillDetailsComponent implements OnInit {
 
   item;
   billId;
+  userNames;
   constructor(
     private billService: BillService,
+    private loginService: LoginService,
     private route: ActivatedRoute
   ) { }
 
@@ -21,8 +24,8 @@ export class BillDetailsComponent implements OnInit {
       this.billId = params.billId;
     });
     this.item = this.billService.getItem(this.billId);
-    //从user表根据账单item的pay_users查找账单用户名，getUsers.php
-
+    this.loginService.updateUsersByIds(this.item['pay_users']);
+    this.userNames = this.loginService.userNames;
   }
 
 }

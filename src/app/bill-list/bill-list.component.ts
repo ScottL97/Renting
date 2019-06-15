@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BillService } from '../bill.service';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-bill-list',
@@ -10,7 +11,8 @@ export class BillListComponent implements OnInit {
 
   billItems = [];
   constructor(
-    private billService: BillService
+    private billService: BillService,
+    private loginService: LoginService
   ) { }
 
   ngOnInit() { 

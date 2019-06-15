@@ -2,6 +2,7 @@
   <a [routerLink]="['/bill-list']" class="bg-danger non-payment p-5 m-5 btn text-light">
     未支付：{{this.billService.unpaidSum | number: '.2-2'}}元
   </a>
+  <p>用户名：{{this.loginService.userName}}</p>
 </div>
 
 <div *ngIf="!this.loginService.ifLogin">
