@@ -1,8 +1,12 @@
-<div class="text-center m-5 p-5">
+<div class="text-center m-5 p-5" *ngIf="this.loginService.ifLogin">
   <button class="btn btn-lg btn-dark mx-2" type="button" [routerLink]="['../bill-create']">
     创建账单
   </button>
-  <button class="btn btn-lg btn-dark mx-2" type="button" [routerLink]="['../bill-list']" (click)="this.billService.changeDisplayMode(true)">
+  <button class="btn btn-lg btn-dark mx-2" type="button" [routerLink]="['../bill-list']">
     账单记录
   </button>
+</div>
+
+<div *ngIf="!this.loginService.ifLogin">
+  <app-login></app-login>
 </div>

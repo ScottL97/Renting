@@ -1,0 +1,9 @@
+<div *ngIf="this.loginService.ifLogin">
+  <p>
+    todo works!
+  </p>
+</div>
+
+<div *ngIf="!this.loginService.ifLogin">
+  <app-login></app-login>
+</div>

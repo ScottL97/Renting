@@ -21,6 +21,8 @@ export class BillDetailsComponent implements OnInit {
       this.billId = params.billId;
     });
     this.item = this.billService.getItem(this.billId);
+    //从user表根据账单item的pay_users查找账单用户名，getUsers.php
+
   }
 
 }

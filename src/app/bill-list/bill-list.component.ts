@@ -11,10 +11,11 @@ export class BillListComponent implements OnInit {
   billItems = [];
   constructor(
     private billService: BillService
-  ) { 
+  ) { }
+
+  ngOnInit() { 
+    console.log("账单列表");
     this.billItems = this.billService.getItems();
   }
-
-  ngOnInit() { }
 
 }

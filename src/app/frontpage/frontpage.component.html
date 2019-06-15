@@ -1,5 +1,9 @@
-<div class="text-center">
-  <a [routerLink]="['/bill-list']" class="bg-danger non-payment p-5 m-5 btn text-light" (click)="this.billService.changeDisplayMode(false)">
-    未支付：80.00元
+<div class="text-center" *ngIf="this.loginService.ifLogin">
+  <a [routerLink]="['/bill-list']" class="bg-danger non-payment p-5 m-5 btn text-light">
+    未支付：{{this.billService.unpaidSum | number: '.2-2'}}元
   </a>
+</div>
+
+<div *ngIf="!this.loginService.ifLogin">
+  <app-login></app-login>
 </div>
